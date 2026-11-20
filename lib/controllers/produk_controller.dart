@@ -5,6 +5,63 @@ import '../services/hive_service.dart';
 
 /// CONTROLLER: Logika bisnis dan manajemen status reaktif produk UMKM.
 class ProdukController extends GetxController {
+  final formKey = GlobalKey<FormState>();
+  final skuC = TextEditingController();
+  final namaC = TextEditingController();
+  final hargaBeliC = TextEditingController();
+  final hargaJualC = TextEditingController();
+  final stokC = TextEditingController();
+  final RxString formKategori = kategoriList.first.obs;
+  final RxBool isEdit = false.obs;
+  String? _editingSku;
+
+  void openAddForm() {
+    isEdit.value = false;
+    _editingSku = null;
+    skuC.clear();
+    namaC.clear();
+    hargaBeliC.clear();
+    hargaJualC.clear();
+    stokC.clear();
+    formKategori.value = kategoriList.first;
+    Get.toNamed('/form');
+  }
+
+  void openEditForm(Produk p) {
+    isEdit.value = true;
+    _editingSku = p.sku;
+    skuC.text = p.sku;
+    namaC.text = p.nama;
+    hargaBeliC.text = p.hargaBeli.toStringAsFixed(0);
+    hargaJualC.text = p.hargaJual.toStringAsFixed(0);
+    stokC.text = p.stok.toString();
+    formKategori.value = p.kategori;
+    Get.toNamed('/form');
+  }
+
+  void tutup() => Get.key.currentState?.pop();
+
+  Future<void> save() async {
+    if (!formKey.currentState!.validate()) return;
+    final produk = Produk(
+      sku: skuC.text.trim().toUpperCase(),
+      nama: namaC.text.trim(),
+      kategori: formKategori.value,
+      hargaBeli: double.tryParse(hargaBeliC.text.trim()) ?? 0.0,
+      hargaJual: double.tryParse(hargaJualC.text.trim()) ?? 0.0,
+      stok: int.tryParse(stokC.text.trim()) ?? 0,
+    );
+    if (isEdit.value) {
+      await _service.update(produk);
+    } else {
+      await _service.create(produk);
+    }
+    loadData();
+    tutup();
+    Get.snackbar('Berhasil', 'Data produk berhasil disimpan',
+        snackPosition: SnackPosition.BOTTOM);
+  }
+
   final HiveService _service = HiveService();
 
   final RxList<Produk> produkList = <Produk>[].obs;
