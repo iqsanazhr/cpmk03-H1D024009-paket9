@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <!-- Transparent Background: Pure Emblem Cutout for 1:1 Background Unification -->
+  <g id="emblem">
+    <!-- 1. The Iconic Coinbase "C" Ring (Clean, Rounded, Symmetrical) -->
+    <path d="M 357 171 A 132 132 0 1 0 357 341" 
+          fill="none" 
+          stroke="#FFFFFF" 
+          stroke-width="44" 
+          stroke-linecap="round"/>
+
+    <!-- 2. Centered Minimalist Storefront & Growth Icon (UMKM Commerce) -->
+    <g id="storefront">
+      <!-- Storefront Awning (Sleek Geometric Silhouette) -->
+      <path d="M 194 218 L 318 218 L 306 188 C 304 184 300 182 295 182 L 217 182 C 212 182 208 184 206 188 Z" 
+            fill="#FFFFFF"/>
+      
+      <!-- Awning Scallops (3 Clean Curves) -->
+      <path d="M 194 218 Q 214 232 235 218 Q 256 232 277 218 Q 297 232 318 218 L 318 214 L 194 214 Z" 
+            fill="#FFFFFF"/>
+
+      <!-- Boutique Display Box / Counter -->
+      <rect x="208" y="242" width="96" height="72" rx="18" fill="#FFFFFF"/>
+
+      <!-- Upward Profit Margin Growth Arrow (Cutout in Negative Space) -->
+      <path d="M 256 294 L 256 260 M 256 260 L 243 273 M 256 260 L 269 273" 
+            stroke="#0052FF" 
+            stroke-width="6" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>
