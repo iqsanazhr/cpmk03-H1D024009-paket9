@@ -120,6 +120,14 @@ class ProdukController extends GetxController {
     loadData();
   }
 
+  double get totalNilaiStok {
+    return produkList.fold(0.0, (t, p) => t + p.totalNilaiStok);
+  }
+
+  int get totalKuantitasStok {
+    return produkList.fold(0, (t, p) => t + p.stok);
+  }
+
   double get rataRataMargin {
     if (produkList.isEmpty) return 0.0;
     final totalMargin = produkList.fold(0.0, (t, p) => t + p.marginKeuntunganPersen);
