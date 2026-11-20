@@ -41,6 +41,24 @@ class ProdukController extends GetxController {
 
   void tutup() => Get.key.currentState?.pop();
 
+  Future<void> confirmDelete(Produk p) async {
+    final yakin = await Get.dialog<bool>(
+      AlertDialog(
+        title: const Text('Hapus Produk?'),
+        content: Text('Yakin ingin menghapus ${p.nama}?'),
+        actions: [
+          TextButton(onPressed: () => Get.back(result: false), child: const Text('Batal')),
+          ElevatedButton(onPressed: () => Get.back(result: true), child: const Text('Hapus')),
+        ],
+      ),
+    );
+    if (yakin == true) {
+      await _service.delete(p.sku);
+      loadData();
+      Get.snackbar('Terhapus', '${p.nama} telah dihapus', snackPosition: SnackPosition.BOTTOM);
+    }
+  }
+
   Future<void> save() async {
     if (!formKey.currentState!.validate()) return;
     final produk = Produk(
