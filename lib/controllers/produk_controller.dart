@@ -99,6 +99,16 @@ class ProdukController extends GetxController {
     loadData();
   }
 
+  double get rataRataMargin {
+    if (produkList.isEmpty) return 0.0;
+    final totalMargin = produkList.fold(0.0, (t, p) => t + p.marginKeuntunganPersen);
+    return totalMargin / produkList.length;
+  }
+
+  double get potensiLabaKumulatif {
+    return produkList.fold(0.0, (t, p) => t + (p.marginKeuntunganNominal * p.stok));
+  }
+
   void loadData() {
     var data = _service.getAll();
     if (data.isEmpty) {
