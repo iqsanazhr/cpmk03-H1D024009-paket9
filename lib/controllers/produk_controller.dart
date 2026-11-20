@@ -85,6 +85,27 @@ class ProdukController extends GetxController {
   final RxList<Produk> produkList = <Produk>[].obs;
   final RxString keyword = ''.obs;
   final RxString selectedKategori = 'Semua'.obs;
+  final RxBool sortAscending = true.obs;
+
+  void toggleSort() => sortAscending.value = !sortAscending.value;
+  void setKategori(String k) => selectedKategori.value = k;
+
+  List<Produk> get filteredList {
+    final q = keyword.value.trim().toLowerCase();
+    final kat = selectedKategori.value;
+    var hasil = produkList.where((p) {
+      final cocokKeyword = q.isEmpty || p.nama.toLowerCase().contains(q) || p.sku.toLowerCase().contains(q);
+      final cocokKategori = (kat == 'Semua') || (p.kategori == kat);
+      return cocokKeyword && cocokKategori;
+    }).toList();
+    if (sortAscending.value) {
+      hasil.sort((a, b) => a.hargaJual.compareTo(b.hargaJual));
+    } else {
+      hasil.sort((a, b) => b.hargaJual.compareTo(a.hargaJual));
+    }
+    return hasil;
+  }
+
 
   static const List<String> kategoriList = [
     'Makanan & Minuman',
